@@ -1,12 +1,12 @@
 import React, { Component } from "react"
-import NewSingle from "./NewSingle"
+import SingleSide from "./SingleSide"
 import Error from "./Error"
 
 class News extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      news: [],
+      sidenews: [],
       error: false,
     }
   }
@@ -20,27 +20,25 @@ class News extends Component {
       })
       .then((data) => {
         this.setState({
-          news: data.articles,
+          sidenews: data.articles,
         })
       })
       .catch((error) => {
-        this.setState({
-          error: true,
-        })
+        console.log(error)
       })
   }
 
   renderItems() {
     if (!this.state.error) {
-      return this.state.news.map((item) => (
-        <NewSingle key={item.url} item={item} />
+      return this.state.sidenews.map((item) => (
+        <SingleSide key={item.url} item={item} />
       ))
     } else {
       return <Error />
     }
   }
   render() {
-    return <div className="row">{this.renderItems()}</div>
+    return <div>{this.renderItems()}</div>
   }
 }
 
